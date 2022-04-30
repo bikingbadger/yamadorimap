@@ -3,7 +3,7 @@
     <l-map
       v-model="zoom"
       v-model:zoom="zoom"
-      :center="[47.41322, -1.219482]"
+      :center="user.defaultLocation"
       @move="log('move')"
       @click="addMarker"
     >
@@ -52,7 +52,7 @@ import {
   // LPolygon,
   // LRectangle,
 } from '@vue-leaflet/vue-leaflet';
-import 'leaflet/dist/leaflet.css';
+
 import L from 'leaflet';
 
 export default {
@@ -77,7 +77,10 @@ export default {
         L.latLng(47.412, -1.218),
         L.latLng(47.413220, -1.219482),
         L.latLng(47.414, -1.22),
-      ]
+      ],
+      user: {
+        defaultLocation: L.latLng(52, -1.218)
+      }
     };
   },
   computed: {
@@ -98,6 +101,12 @@ export default {
         this.iconWidth = Math.floor(this.iconHeight / 2);
       }
     },
+    addMarker() {
+      console.log('Add to array')
+    }
+    ,removeMarker() {
+      console.log('Remove from the array')
+    }
   },
 };
 </script>
