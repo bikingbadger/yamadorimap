@@ -12,7 +12,13 @@
       ></l-tile-layer>
       <l-control-layers />
 
-      <l-marker v-for="marker, index in markers" :key=index :lat-lng="marker" @click="removeMarker(index)"></l-marker>
+      <l-marker
+        v-for="marker in markers"
+        :key="marker.id"
+        :lat-lng="marker.latLng"
+        @click="removeMarker(index)"
+        ><l-tooltip>{{ marker.tooltip }}</l-tooltip></l-marker
+      >
 
       <!-- <l-marker :lat-lng="[47.41322, -1.219482]">
         <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
@@ -46,7 +52,7 @@ import {
   LTileLayer,
   LMarker,
   LControlLayers,
-  // LTooltip,
+  LTooltip,
   // LPopup,
   // LPolyline,
   // LPolygon,
@@ -62,7 +68,7 @@ export default {
     LTileLayer,
     LMarker,
     LControlLayers,
-    // LTooltip,
+    LTooltip,
     // LPopup,
     //LPolyline,
     //LPolygon,
@@ -70,17 +76,29 @@ export default {
   },
   data() {
     return {
-      zoom: 10,
+      zoom: 8,
       iconWidth: 25,
       iconHeight: 40,
       markers: [
-        L.latLng(47.412, -1.218),
-        L.latLng(47.413220, -1.219482),
-        L.latLng(47.414, -1.22),
+        {
+          id: 1,
+          latLng: L.latLng(32.75, 35.5521),
+          tooltip: 'Pinus Sylvestris',
+        },
+        {
+          id: 2,
+          latLng: L.latLng(32.55, 35.3545),
+          tooltip: 'Acer Palmatum',
+        },
+        {
+          id: 3,
+          latLng: L.latLng(33.0451, 35.1578),
+          tooltip: 'Ficus Binyamina',
+        },
       ],
       user: {
-        defaultLocation: L.latLng(52, -1.218)
-      }
+        defaultLocation: L.latLng(32.0461, 34.8516),
+      },
     };
   },
   computed: {
@@ -101,12 +119,21 @@ export default {
         this.iconWidth = Math.floor(this.iconHeight / 2);
       }
     },
-    addMarker() {
-      console.log('Add to array')
-    }
-    ,removeMarker() {
-      console.log('Remove from the array')
-    }
+    addMarker(event) {
+      console.log(event);
+      if (!event.latlng) return;
+      const newTree = {
+        id: this.markers.length + 1,
+        latLng: event.latlng,
+        tooltip: 'New Tree',
+      };
+
+      this.markers.push( newTree) ;
+      console.log(this.markers);
+    },
+    removeMarker(index) {
+      this.markers.splice(index, 1);
+    },
   },
 };
 </script>
