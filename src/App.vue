@@ -16,9 +16,12 @@
         v-for="marker in markers"
         :key="marker.id"
         :lat-lng="marker.latLng"
-        @click="removeMarker(index)"
-        ><l-tooltip>{{ marker.tooltip }}</l-tooltip></l-marker
-      >
+        @click="removeMarker(marker.id)"
+        draggable
+        >
+        <l-tooltip>{{ marker.tooltip }}</l-tooltip>
+        <l-icon :icon-url="marker.iconUrl" :icon-size="iconSize" />
+      </l-marker>
 
       <!-- <l-marker :lat-lng="[47.41322, -1.219482]">
         <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
@@ -48,7 +51,7 @@
 <script>
 import {
   LMap,
-  // LIcon,
+  LIcon,
   LTileLayer,
   LMarker,
   LControlLayers,
@@ -64,7 +67,7 @@ import L from 'leaflet';
 export default {
   components: {
     LMap,
-    // LIcon,
+    LIcon,
     LTileLayer,
     LMarker,
     LControlLayers,
@@ -78,22 +81,25 @@ export default {
     return {
       zoom: 8,
       iconWidth: 25,
-      iconHeight: 40,
+      iconHeight: 25,
       markers: [
         {
           id: 1,
           latLng: L.latLng(32.75, 35.5521),
           tooltip: 'Pinus Sylvestris',
+          iconUrl: `https://placekitten.com/50/50`,
         },
         {
           id: 2,
           latLng: L.latLng(32.55, 35.3545),
           tooltip: 'Acer Palmatum',
+          iconUrl: `https://placekitten.com/50/50`,
         },
         {
           id: 3,
           latLng: L.latLng(33.0451, 35.1578),
           tooltip: 'Ficus Binyamina',
+          iconUrl: `https://placekitten.com/50/50`,
         },
       ],
       user: {
@@ -102,9 +108,6 @@ export default {
     };
   },
   computed: {
-    iconUrl() {
-      return `https://placekitten.com/${this.iconWidth}/${this.iconHeight}`;
-    },
     iconSize() {
       return [this.iconWidth, this.iconHeight];
     },
@@ -113,26 +116,21 @@ export default {
     log(a) {
       console.log(a);
     },
-    changeIcon() {
-      this.iconWidth += 2;
-      if (this.iconWidth > this.iconHeight) {
-        this.iconWidth = Math.floor(this.iconHeight / 2);
-      }
-    },
     addMarker(event) {
-      console.log(event);
       if (!event.latlng) return;
       const newTree = {
         id: this.markers.length + 1,
         latLng: event.latlng,
         tooltip: 'New Tree',
+        iconUrl: '',
       };
 
-      this.markers.push( newTree) ;
+      this.markers.push(newTree);
       console.log(this.markers);
     },
     removeMarker(index) {
-      this.markers.splice(index, 1);
+      console.log(index);
+      this.markers.splice(index - 1, 1);
     },
   },
 };
