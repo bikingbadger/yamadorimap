@@ -3,10 +3,10 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
 
-    <div v-if="isAuthenticated">
-      <code>{{ user.name }}</code>
+    <span v-if="isAuthenticated">
+      <router-link to="/profile" >Profile</router-link>      
       <button @click="logout">Log out</button>
-    </div>
+    </span>
     <button v-else @click="login">Log in</button>
   </div>
   <router-view />
