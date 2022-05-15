@@ -24,6 +24,12 @@
         <l-icon :icon-url="marker.iconUrl" :icon-size="iconSize" />
       </l-marker>
 
+      <l-marker
+        v-for="location in locations.allLocations"
+        :key="location.id"
+        :lat-lng="location.latLng"
+      ></l-marker>
+
       <!-- <l-marker :lat-lng="[47.41322, -1.219482]">
         <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
         <l-tooltip>Pinus Sylvestris</l-tooltip>
@@ -51,6 +57,9 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue';
+
+// Import Leaflet Components
+import L from 'leaflet';
 import {
   LMap,
   LIcon,
@@ -64,7 +73,8 @@ import {
   // LRectangle,
 } from '@vue-leaflet/vue-leaflet';
 
-import L from 'leaflet';
+// Import the locations store
+import { useLocationStore } from '../store/location';
 
 const zoom = ref(8);
 const minZoom = ref(2);
@@ -72,41 +82,24 @@ const maxZoom = ref(19);
 const iconWidth = ref(25);
 const iconHeight = ref(25);
 
-const markers = reactive([
-  {
-    id: Math.random().toString(36).slice(2),
-    latLng: L.latLng(32.75, 35.5521),
-    tooltip: 'Pinus Sylvestris',
-    iconUrl: `https://placekitten.com/50/50`,
-  },
-  {
-    id: Math.random().toString(36).slice(2),
-    latLng: L.latLng(32.55, 35.3545),
-    tooltip: 'Acer Palmatum',
-    iconUrl: `https://placekitten.com/50/50`,
-  },
-  {
-    id: Math.random().toString(36).slice(2),
-    latLng: L.latLng(33.0451, 35.1578),
-    tooltip: 'Ficus Binyamina',
-    iconUrl: `https://placekitten.com/50/50`,
-  },
-]);
+const locations = useLocationStore();
+
 const user = reactive({
   defaultLocation: L.latLng(32.0461, 34.8516),
 });
 
 function addMarker(event) {
-  if (!event.latlng) return;
-  const newTree = {
-    id: Math.random().toString(36).slice(2),
-    latLng: event.latlng,
-    tooltip: 'New Tree',
-    iconUrl: '',
-  };
+   if (!event.latlng) return;
+//   const newTree = {
+//     id: Math.random().toString(36).slice(2),
+//     latLng: event.latlng,
+//     tooltip: 'New Tree',
+//     iconUrl: '',
+//   };
 
-  this.markers.push(newTree);
-  console.log(this.markers);
+//   this.markers.push(newTree);
+//   console.log(this.markers);
+locations.addMarker(event.latlng,`Math.random().toString(36).slice(2)`)
 }
 
 function removeMarker(id) {
