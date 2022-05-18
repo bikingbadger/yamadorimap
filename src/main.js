@@ -9,11 +9,11 @@ import 'leaflet/dist/leaflet.css';
 
 // Add PrimeVue for CSS components
 import PrimeVue from 'primevue/config';
-import 'primevue/resources/themes/saga-blue/theme.css'   //theme
-import 'primevue/resources/primevue.min.css'           //core css
-import 'primeicons/primeicons.css'    
-import Button from 'primevue/button';        
-import InputText from 'primevue/inputtext';     //icons
+import 'primevue/resources/themes/lara-light-teal/theme.css'; //theme
+import 'primevue/resources/primevue.min.css'; //core css
+import 'primeicons/primeicons.css';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext'; //icons
 
 // Import Pinia for state
 import { createPinia } from 'pinia';
@@ -29,8 +29,8 @@ mapApp.use(router);
 
 // Use Prime Vue
 mapApp.use(PrimeVue);
-mapApp.component('Button',Button)
-mapApp.component('InputText',InputText)
+mapApp.component('Button', Button);
+mapApp.component('InputText', InputText);
 
 // Use pinia for state
 mapApp.use(createPinia());

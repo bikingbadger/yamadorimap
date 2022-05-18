@@ -40,7 +40,8 @@ import { ref
  //, computed 
 } from 'vue';
 
-import { latLng } from "leaflet/dist/leaflet-src.esm";
+
+ import { latLng } from "leaflet/dist/leaflet-src.esm";
 import {
   LMap,
   // LIcon,
