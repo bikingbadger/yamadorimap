@@ -1,6 +1,10 @@
 <template>
   <Menubar v-if="isAuthenticated" :model="itemsLoggedOn">
-    <template #start> </template>
+    <template #start>
+      <router-link to="/">
+        <img alt="logo" src="../assets/logo.png" height="40" class="mr-2" />
+      </router-link>
+    </template>
     <template #end>
       <InputText placeholder="Search" type="text" />
     </template>
@@ -21,11 +25,6 @@ import Menubar from 'primevue/menubar';
 const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
 const itemsLoggedOn = ref([
-  {
-    label: 'Home',
-    icon: 'pi pi-fw pi-home',
-    to: '/',
-  },
   {
     label: 'Map',
     icon: 'pi pi-fw pi-map',
@@ -75,11 +74,6 @@ const itemsLoggedOn = ref([
 ]);
 
 const itemsLoggedOut = ref([
-  {
-    label: 'Home',
-    icon: 'pi pi-fw pi-home',
-    to: '/',
-  },
   {
     label: 'About',
     icon: 'pi pi-fw pi-calendar',
