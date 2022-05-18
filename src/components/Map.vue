@@ -3,12 +3,12 @@
     <l-map 
       style="height: 90vh; width: 90vw"
       :min-zoom="minZoom"
-    >
-      <!-- v-model:zoom="zoom"
+      v-model:zoom="zoom"
       :max-zoom="maxZoom"
-      :center="user.defaultLocation"
-      @move="log('move')"
-      @click="addMarker" -->
+   :center="user.defaultLocation"
+    >
+     
+       <!--   @click="addMarker" -->
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
@@ -36,18 +36,17 @@
 
 <script setup>
 import { ref
-// , reactive, computed 
+ , reactive
+ //, computed 
 } from 'vue';
 
-// Import Leaflet Components
-//import { latLng } from 'leaflet';
-// import { latLng } from "leaflet/dist/leaflet-src.esm";
+import { latLng } from "leaflet/dist/leaflet-src.esm";
 import {
   LMap,
   // LIcon,
-  // LTileLayer,
+   LTileLayer,
   // LMarker,
-  // LControlLayers,
+   LControlLayers,
   // LTooltip,
 
   // LPopup,
@@ -59,17 +58,17 @@ import {
 // Import the locations store
 // import { useLocationStore } from '../store/location';
 
-// const zoom = ref(8);
+ const zoom = ref(8);
 const minZoom = ref(2);
-// const maxZoom = ref(19);
+ const maxZoom = ref(19);
 // const iconWidth = ref(25);
 // const iconHeight = ref(25);
 
 // const locations = useLocationStore();
 
-// const user = reactive({
-//   defaultLocation: latLng(32.0461, 34.8516),
-// });
+const user = reactive({
+  defaultLocation: latLng(32.0461, 34.8516),
+});
 
 // function addMarker(event) {
 //   if (!event.latlng) return;
