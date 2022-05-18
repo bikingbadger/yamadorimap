@@ -13,7 +13,11 @@ import 'primevue/resources/themes/lara-light-teal/theme.css'; //theme
 import 'primevue/resources/primevue.min.css'; //core css
 import 'primeicons/primeicons.css';
 import Button from 'primevue/button';
-import InputText from 'primevue/inputtext'; //icons
+import InputText from 'primevue/inputtext'; 
+import Card from 'primevue/card';//icons
+import Avatar from 'primevue/avatar';
+import Badge from 'primevue/badge';
+import BadgeDirective from 'primevue/badgedirective';
 
 // Import Pinia for state
 import { createPinia } from 'pinia';
@@ -28,9 +32,13 @@ const mapApp = createApp(App);
 mapApp.use(router);
 
 // Use Prime Vue
-mapApp.use(PrimeVue);
+mapApp.use(PrimeVue,{ripple: true});
 mapApp.component('Button', Button);
 mapApp.component('InputText', InputText);
+mapApp.component('Card', Card);
+mapApp.component('Avatar', Avatar);
+mapApp.component('Badge', Badge);
+mapApp.directive('badge', BadgeDirective);
 
 // Use pinia for state
 mapApp.use(createPinia());
