@@ -1,7 +1,7 @@
 <template>
   <div >
     <l-map 
-      style="height: 90vh; width: 90vw"
+      style="height: 80vh; width: 100%"
       :min-zoom="minZoom"
       v-model:zoom="zoom"
       :max-zoom="maxZoom"

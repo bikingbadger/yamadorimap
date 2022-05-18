@@ -1,7 +1,8 @@
 <template>
-  <Navigation />
-
-  <router-view />
+  <div class="container">
+    <Navigation />
+    <router-view />
+  </div>
 </template>
 
 <script setup>
@@ -15,18 +16,13 @@ import Navigation from '@/components/Navigation.vue';
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: grid;
+  grid-template-columns: 20fr 60fr 20fr;
+  grid-template-rows: auto;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.container {
+  grid-column: 2;
+  width: 66vw;
 }
 </style>
