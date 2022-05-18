@@ -22,9 +22,14 @@ const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
 const itemsLoggedOn = ref([
   {
+    label: 'Home',
+    icon: 'pi pi-fw pi-home',
+    to: '/',
+  },
+  {
     label: 'Map',
     icon: 'pi pi-fw pi-map',
-    to: '/'
+    to: '/map',
   },
   {
     label: 'Edit',
@@ -58,7 +63,7 @@ const itemsLoggedOn = ref([
   {
     label: 'User',
     icon: 'pi pi-fw pi-user',
-    to: '/profile'   
+    to: '/profile',
   },
   {
     label: 'Logout',
@@ -70,6 +75,11 @@ const itemsLoggedOn = ref([
 ]);
 
 const itemsLoggedOut = ref([
+  {
+    label: 'Home',
+    icon: 'pi pi-fw pi-home',
+    to: '/',
+  },
   {
     label: 'About',
     icon: 'pi pi-fw pi-calendar',

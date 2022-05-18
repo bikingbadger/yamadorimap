@@ -1,9 +1,9 @@
 <template>
-  <UserCard />
+  <Map />
 </template>
 
 <script setup>
-import UserCard from '@/components/UserCard.vue';
+import Map from '@/components/Map.vue';
 </script>
 
 <style></style>
