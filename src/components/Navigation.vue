@@ -89,4 +89,8 @@ const itemsLoggedOut = ref([
 ]);
 </script>
 
-<style></style>
+<style>
+.p-inputtext {
+  width: 100%;
+}
+</style>

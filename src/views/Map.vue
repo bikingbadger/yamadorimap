@@ -1,9 +1,14 @@
 <template>
-  <Map />
+  <Map class="map" />
 </template>
 
 <script setup>
 import Map from '@/components/Map.vue';
 </script>
 
-<style></style>
+<style>
+.leaflet-container {
+  margin-top: 1rem;
+  border-radius: 10px;
+}
+</style>
