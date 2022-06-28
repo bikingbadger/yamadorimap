@@ -2,7 +2,7 @@
   <Menubar v-if="isAuthenticated" :model="itemsLoggedOn">
     <template #start>
       <router-link to="/">
-        <img alt="logo" src="../assets/logo.png" height="40" class="mr-2" />
+        <img alt="logo" src="/assets/bonsai.png" height="40" class="mr-2" />
       </router-link>
     </template>
     <template #end>
@@ -11,7 +11,15 @@
   </Menubar>
 
   <Menubar v-if="!isAuthenticated" :model="itemsLoggedOut">
-    <template #start> </template>
+    <template #start
+      ><router-link to="/">
+        <img
+          alt="logo"
+          src="/assets/bonsai.png"
+          height="40"
+          class="mr-2"
+        /> </router-link
+    ></template>
     <template #end>
       <InputText placeholder="Search" type="text" />
     </template>
@@ -30,40 +38,40 @@ const itemsLoggedOn = ref([
     icon: 'pi pi-fw pi-map',
     to: '/map',
   },
-  {
-    label: 'Edit',
-    icon: 'pi pi-fw pi-pencil',
-    items: [
-      {
-        label: 'New',
-        icon: 'pi pi-fw pi-plus',
-        items: [
-          {
-            label: 'Tree',
-            icon: 'pi pi-fw pi-tree',
-          },
-          {
-            label: 'Video',
-            icon: 'pi pi-fw pi-video',
-          },
-        ],
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-fw pi-trash',
-      },
-    ],
-  },
-  {
-    label: 'About',
-    icon: 'pi pi-fw pi-calendar',
-    to: '/about',
-  },
-  {
-    label: 'User',
-    icon: 'pi pi-fw pi-user',
-    to: '/profile',
-  },
+  // {
+  //   label: 'Edit',
+  //   icon: 'pi pi-fw pi-pencil',
+  //   items: [
+  //     {
+  //       label: 'New',
+  //       icon: 'pi pi-fw pi-plus',
+  //       items: [
+  //         {
+  //           label: 'Tree',
+  //           icon: 'pi pi-fw pi-tree',
+  //         },
+  //         {
+  //           label: 'Video',
+  //           icon: 'pi pi-fw pi-video',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       label: 'Delete',
+  //       icon: 'pi pi-fw pi-trash',
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: 'About',
+  //   icon: 'pi pi-fw pi-calendar',
+  //   to: '/about',
+  // },
+  // {
+  //   label: 'User',
+  //   icon: 'pi pi-fw pi-user',
+  //   to: '/profile',
+  // },
   {
     label: 'Logout',
     icon: 'pi pi-fw pi-power-off',
