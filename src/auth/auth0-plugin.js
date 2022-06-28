@@ -92,13 +92,12 @@ export const useAuth0 = ({
 
   return instance;
 };
+// Add  auth0
+import { domain, clientId } from './auth_config.json';
+import { createAuth0 } from '@auth0/auth0-vue';
 
-/**
- *  Vue.js Plugin Definition
- */
-
-export const Auth0Plugin = {
-  install(Vue, options) {
-    Vue.prototype.$auth = useAuth0(options);
-  },
-};
+export const Auth0Plugin = createAuth0({
+  domain: domain,
+  client_id: clientId,
+  redirect_uri: window.location.origin,
+});
