@@ -18,7 +18,7 @@
         :lat-lng="location.latLng"
       >
         <l-tooltip>{{ location.tree }}</l-tooltip>
-        <l-icon :icon-url="location.image" :icon-size="iconSize" />
+        <l-icon v-if="location.image" :icon-url="location.image" :icon-size="iconSize" />
       </l-marker>
     </l-map>
   </div>
