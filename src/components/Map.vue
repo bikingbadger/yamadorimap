@@ -7,30 +7,18 @@
       :max-zoom="maxZoom"
       :center="user.defaultLocation"
     >
-      <!--   @click="addMarker" -->
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
       <l-control-layers />
-
-      <!-- <l-marker
-        v-for="location in locations"
-        :key="location.id"
-        :lat-lng="location.latLng"
-        @click="removelocation(location.id)"
-        draggable
-      >
-        <l-tooltip>{{ location.tooltip }}</l-tooltip>
-        <l-icon :icon-url="location.iconUrl" :icon-size="iconSize" />
-      </l-marker> -->
 
       <l-marker
         v-for="location in locations"
         :key="location.id"
         :lat-lng="location.latLng"
       >
-        <l-tooltip>{{ location.tooltip }}</l-tooltip>
-        <l-icon :icon-url="location.iconUrl" :icon-size="iconSize" />
+        <l-tooltip>{{ location.tree }}</l-tooltip>
+        <l-icon :icon-url="location.image" :icon-size="iconSize" />
       </l-marker>
     </l-map>
   </div>

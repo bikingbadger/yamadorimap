@@ -14,23 +14,26 @@ export const useLocationStore = defineStore('locations', {
   },
   actions: {
     async getLocations() {
-      console.log('location');
       const result = await fetch('http://localhost:3000/api/coordinates');
-      console.log('location', result);
       const data = await result.json();
-      console.log('location', JSON.stringify(data, null, 2));
       const userLocations = [...data.data];
-      console.log('location', JSON.stringify(userLocations, null, 2));
       this.locations = userLocations.map((location) => {
         const parsedLatLng = location.latLng
           .split(',')
           .map((ll) => parseFloat(ll));
-        console.log(parsedLatLng);
         return {
+          // userID: coordinates.userID,
+          // latLng: coordinates.latLng,
+          // tree: coordinates.tree,
+          // notes: coordinates.notes,
+          // image: coordinates.image,
+          // public: coordinates.public,
           id: location.id,
           latLng: latLng(parsedLatLng),
-          tooltip: location.tooltip,
-          iconUrl: location.iconUrl,
+          tree: location.tree,
+          image: location.image,
+          notes: location.notes,
+          public: location.public,
         };
       });
     },
