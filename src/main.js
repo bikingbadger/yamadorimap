@@ -13,8 +13,8 @@ import 'primevue/resources/themes/lara-light-teal/theme.css'; //theme
 import 'primevue/resources/primevue.min.css'; //core css
 import 'primeicons/primeicons.css';
 import Button from 'primevue/button';
-import InputText from 'primevue/inputtext'; 
-import Card from 'primevue/card';//icons
+import InputText from 'primevue/inputtext';
+import Card from 'primevue/card'; //icons
 import Avatar from 'primevue/avatar';
 import Badge from 'primevue/badge';
 import BadgeDirective from 'primevue/badgedirective';
@@ -22,9 +22,7 @@ import BadgeDirective from 'primevue/badgedirective';
 // Import Pinia for state
 import { createPinia } from 'pinia';
 
-// Add  auth0
-import { domain, clientId } from '../auth_config.json';
-import { createAuth0 } from '@auth0/auth0-vue';
+import { Auth0Plugin } from './auth/auth0-plugin.js';
 
 const mapApp = createApp(App);
 
@@ -32,7 +30,7 @@ const mapApp = createApp(App);
 mapApp.use(router);
 
 // Use Prime Vue
-mapApp.use(PrimeVue,{ripple: true});
+mapApp.use(PrimeVue, { ripple: true });
 mapApp.component('Button', Button);
 mapApp.component('InputText', InputText);
 mapApp.component('Card', Card);
@@ -44,12 +42,6 @@ mapApp.directive('badge', BadgeDirective);
 mapApp.use(createPinia());
 
 // Install authentication plugin
-mapApp.use(
-  createAuth0({
-    domain: domain,
-    client_id: clientId,
-    redirect_uri: window.location.origin,
-  }),
-);
+mapApp.use(Auth0Plugin);
 
 mapApp.mount('#app');
