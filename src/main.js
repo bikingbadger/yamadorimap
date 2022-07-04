@@ -45,3 +45,5 @@ mapApp.use(createPinia());
 mapApp.use(Auth0Plugin);
 
 mapApp.mount('#app');
+
+console.log(process.env);

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { latLng } from 'leaflet';
 
+const apiurl = `${process.env.VUE_APP_API_URL}`;
+
 export const useLocationStore = defineStore('locations', {
   state: () => ({
     /** @type {{ id: string, latLang: L.latLng, tooltip: string, iconUrl: string }[]} */
@@ -14,7 +16,9 @@ export const useLocationStore = defineStore('locations', {
   },
   actions: {
     async getLocations() {
-      const result = await fetch('http://localhost:3000/api/coordinates');
+      const apiEndpoint = `${apiurl}/api/coordinates`;
+      console.log(apiEndpoint);
+      const result = await fetch(apiEndpoint);
       const data = await result.json();
       const userLocations = [...data.data];
       this.locations = userLocations.map((location) => {
