@@ -5,7 +5,8 @@
       :min-zoom="minZoom"
       v-model:zoom="zoom"
       :max-zoom="maxZoom"
-      :center="user.defaultLocation"
+      :center="defaultLocation"
+      @click="addMarker"
     >
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -18,7 +19,11 @@
         :lat-lng="location.latLng"
       >
         <l-tooltip>{{ location.tree }}</l-tooltip>
-        <l-icon v-if="location.image" :icon-url="location.image" :icon-size="iconSize" />
+        <l-icon
+          v-if="location.image"
+          :icon-url="location.image"
+          :icon-size="iconSize"
+        />
       </l-marker>
     </l-map>
   </div>
@@ -26,6 +31,9 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue';
+
+// Import auth
+import { useAuth0 } from '@auth0/auth0-vue';
 
 // Import the store
 import { storeToRefs } from 'pinia';
@@ -52,6 +60,7 @@ const minZoom = ref(2);
 const maxZoom = ref(19);
 const iconWidth = ref(25);
 const iconHeight = ref(25);
+const defaultLocation= reactive(latLng(32.0461, 34.8516));
 
 const iconSize = computed(() => {
   return [iconWidth.value, iconHeight.value];
@@ -62,23 +71,16 @@ const { locations } = storeToRefs(useLocationStore());
 const locationStore = useLocationStore();
 locationStore.getLocations();
 
-const user = reactive({
-  defaultLocation: latLng(32.0461, 34.8516),
-});
+// const user = reactive({
+//   defaultLocation: latLng(32.0461, 34.8516),
+// });
 
-// function addMarker(event) {
-//   if (!event.latlng) return;
-//   //   const newTree = {
-//   //     id: Math.random().toString(36).slice(2),
-//   //     latLng: event.latlng,
-//   //     tooltip: 'New Tree',
-//   //     iconUrl: '',
-//   //   };
-
-//   //   this.markers.push(newTree);
-//   //   console.log(this.markers);
-//   // locations.addMarker(latLng, `Math.random().toString(36).slice(2)`);
-// }
+const { user } = useAuth0();
+     
+function addMarker(event) {
+  if (!event.latlng) return;
+  locationStore.addMarker(user._rawValue.sub,event);
+}
 
 // function removeMarker(id) {
 //   console.log(id);

@@ -22,6 +22,7 @@ import BadgeDirective from 'primevue/badgedirective';
 // Import Pinia for state
 import { createPinia } from 'pinia';
 
+// Setup auth
 import { Auth0Plugin } from './auth/auth0-plugin.js';
 
 const mapApp = createApp(App);

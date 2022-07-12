@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { latLng } from 'leaflet';
 
+
+
+
 const apiurl = `${process.env.VUE_APP_API_URL}`;
 
 export const useLocationStore = defineStore('locations', {
@@ -26,12 +29,6 @@ export const useLocationStore = defineStore('locations', {
           .split(',')
           .map((ll) => parseFloat(ll));
         return {
-          // userID: coordinates.userID,
-          // latLng: coordinates.latLng,
-          // tree: coordinates.tree,
-          // notes: coordinates.notes,
-          // image: coordinates.image,
-          // public: coordinates.public,
           id: location.id,
           latLng: latLng(parsedLatLng),
           tree: location.tree,
@@ -41,16 +38,32 @@ export const useLocationStore = defineStore('locations', {
         };
       });
     },
-    addMarker(location, treeName) {
-      if (!location.latlng) return;
-      const newLocation = {
-        id: Math.random().toString(36).slice(2),
-        latLng: location.latlng,
-        tooltip: treeName,
-        iconUrl: '',
+    async addMarker(userID, location) {
+      
+      const apiEndpoint = `${apiurl}/api/coordinate`;
+      const payload = {
+        userID: userID,
+        latLng: `${location.latlng.lat},${location.latlng.lng}`,
+        tree: location.tree || 'Test Tree',
+        image: location.image || '',
+        notes: location.notes || '',
+        public: location.public || false,
       };
+      const result = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+     
+      const data = await result.json();
 
-      this.locations.push(newLocation);
+      console.log('addMarker',data.data);
+      data.data.latLng = location.latlng;
+      console.log('addMarker',data.data);
+      this.locations.push(data.data);
     },
     removeMarker(id) {
       console.log(id);
