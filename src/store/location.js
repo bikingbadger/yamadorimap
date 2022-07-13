@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia';
 import { latLng } from 'leaflet';
 
-
-
-
 const apiurl = `${process.env.VUE_APP_API_URL}`;
 
 export const useLocationStore = defineStore('locations', {
@@ -38,17 +35,9 @@ export const useLocationStore = defineStore('locations', {
         };
       });
     },
-    async addMarker(userID, location) {
-      
+    async addMarker(location) {
       const apiEndpoint = `${apiurl}/api/coordinate`;
-      const payload = {
-        userID: userID,
-        latLng: `${location.latlng.lat},${location.latlng.lng}`,
-        tree: location.tree || 'Test Tree',
-        image: location.image || '',
-        notes: location.notes || '',
-        public: location.public || false,
-      };
+      const payload = location;
       const result = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
@@ -57,13 +46,19 @@ export const useLocationStore = defineStore('locations', {
         },
         body: JSON.stringify(payload),
       });
-     
+
       const data = await result.json();
 
-      console.log('addMarker',data.data);
-      data.data.latLng = location.latlng;
-      console.log('addMarker',data.data);
-      this.locations.push(data.data);
+      const newLocation = data.data;
+      console.log(newLocation);
+
+      const parsedLatLng = newLocation.latLng
+        .split(',')
+        .map((ll) => parseFloat(ll));
+      newLocation.latLng = latLng(parsedLatLng);
+
+      console.log(newLocation);
+      this.locations.push(newLocation);
     },
     removeMarker(id) {
       console.log(id);

@@ -79,7 +79,17 @@ const { user } = useAuth0();
      
 function addMarker(event) {
   if (!event.latlng) return;
-  locationStore.addMarker(user._rawValue.sub,event);
+
+const location = {
+        userID: user._rawValue.sub,
+        latLng: `${event.latlng.lat},${event.latlng.lng}`,
+        tree: event.tree || 'Test Tree',
+        image: event.image || '',
+        notes: event.notes || '',
+        public: event.public || false,
+      };
+
+  locationStore.addMarker(location);
 }
 
 // function removeMarker(id) {
