@@ -15,8 +15,9 @@
 
       <l-marker
         v-for="location in locations"
-        :key="location.id"
+        :key="location._id"
         :lat-lng="location.latLng"
+        @click="deleteMarker(location)"
       >
         <l-tooltip>{{ location.tree }}</l-tooltip>
         <l-icon
@@ -38,6 +39,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 // Import the store
 import { storeToRefs } from 'pinia';
 import { useLocationStore } from '../store/location';
+import uuidv4 from '../utils/uuid';
 
 import { latLng } from 'leaflet/dist/leaflet-src.esm';
 import {
@@ -60,7 +62,7 @@ const minZoom = ref(2);
 const maxZoom = ref(19);
 const iconWidth = ref(25);
 const iconHeight = ref(25);
-const defaultLocation= reactive(latLng(32.0461, 34.8516));
+const defaultLocation = reactive(latLng(32.0461, 34.8516));
 
 const iconSize = computed(() => {
   return [iconWidth.value, iconHeight.value];
@@ -76,29 +78,26 @@ locationStore.getLocations();
 // });
 
 const { user } = useAuth0();
-     
+
 function addMarker(event) {
   if (!event.latlng) return;
 
-const location = {
-        userID: user._rawValue.sub,
-        latLng: `${event.latlng.lat},${event.latlng.lng}`,
-        tree: event.tree || 'Test Tree',
-        image: event.image || '',
-        notes: event.notes || '',
-        public: event.public || false,
-      };
+  const location = {
+    _id: uuidv4(),
+    userID: user._rawValue.sub,
+    latLng: `${event.latlng.lat},${event.latlng.lng}`,
+    tree: event.tree || 'Test Tree',
+    image: event.image || '',
+    notes: event.notes || '',
+    public: event.public || false,
+  };
 
   locationStore.addMarker(location);
 }
 
-// function removeMarker(id) {
-//   console.log(id);
-//   this.markers.splice(
-//     this.markers.findIndex((item) => item.id === id),
-//     1,
-//   );
-// }
+function deleteMarker(location) {
+  locationStore.deleteMarker(location);
+}
 </script>
 
 <style></style>

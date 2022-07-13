@@ -7,17 +7,10 @@ export const useLocationStore = defineStore('locations', {
   state: () => ({
     /** @type {{ id: string, latLang: L.latLng, tooltip: string, iconUrl: string }[]} */
     locations: [],
-    nextId: 0,
   }),
-  getters: {
-    allLocations() {
-      return this.locations;
-    },
-  },
   actions: {
     async getLocations() {
       const apiEndpoint = `${apiurl}/api/coordinates`;
-      console.log(apiEndpoint);
       const result = await fetch(apiEndpoint);
       const data = await result.json();
       const userLocations = [...data.data];
@@ -26,7 +19,7 @@ export const useLocationStore = defineStore('locations', {
           .split(',')
           .map((ll) => parseFloat(ll));
         return {
-          id: location.id,
+          _id: location._id,
           latLng: latLng(parsedLatLng),
           tree: location.tree,
           image: location.image,
@@ -50,20 +43,35 @@ export const useLocationStore = defineStore('locations', {
       const data = await result.json();
 
       const newLocation = data.data;
-      console.log(newLocation);
 
       const parsedLatLng = newLocation.latLng
         .split(',')
         .map((ll) => parseFloat(ll));
       newLocation.latLng = latLng(parsedLatLng);
-
-      console.log(newLocation);
       this.locations.push(newLocation);
     },
-    removeMarker(id) {
-      console.log(id);
+    async deleteMarker(location) {
+      console.log(location);
+      const payload = { ...location };
+      payload.latLng = `${location.latLng.lat},${location.latLng.lng}`;
+      console.log(payload);
+      const apiEndpoint = `${apiurl}/api/coordinate`;
+      const result = await fetch(apiEndpoint, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await result.json();
+
+      console.log(data);
+      const removedLocation = data.data;
+
       this.locations.splice(
-        this.locations.findIndex((item) => item.id === id),
+        this.locations.findIndex((item) => item._id === removedLocation._id),
         1,
       );
     },
