@@ -93,11 +93,12 @@ export const useAuth0 = ({
   return instance;
 };
 // Add  auth0
-import { domain, clientId } from './auth_config.json';
+import { domain, clientId, audience } from './auth_config.json';
 import { createAuth0 } from '@auth0/auth0-vue';
 
 export const Auth0Plugin = createAuth0({
   domain: domain,
   client_id: clientId,
+  audience: audience,
   redirect_uri: window.location.origin,
 });

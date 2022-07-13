@@ -1,6 +1,6 @@
 {
   "domain": "hiltonmeyer-dev.auth0.com",
   "clientId": "awGqy9TP33jk5iQ7gUzqx5vqu7VXk02r",
-  "audience": "",
+  "audience": "https://yamadoriapi.hiltonmeyer.com",
   "serverUrl": ""
 }
