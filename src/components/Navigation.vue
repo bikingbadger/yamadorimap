@@ -11,15 +11,11 @@
   </Menubar>
 
   <Menubar v-if="!isAuthenticated" :model="itemsLoggedOut">
-    <template #start
-      ><router-link to="/">
-        <img
-          alt="logo"
-          src="/assets/bonsai.png"
-          height="40"
-          class="mr-2"
-        /> </router-link
-    ></template>
+    <template #start>
+      <router-link to="/">
+        <img alt="logo" src="/assets/bonsai.png" height="40" class="mr-2" />
+      </router-link>
+    </template>
     <template #end>
       <InputText placeholder="Search" type="text" />
     </template>
