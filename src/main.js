@@ -18,6 +18,11 @@ import Card from 'primevue/card'; //icons
 import Avatar from 'primevue/avatar';
 import Badge from 'primevue/badge';
 import BadgeDirective from 'primevue/badgedirective';
+import Checkbox from 'primevue/checkbox';
+import Dialog from 'primevue/dialog';
+import Textarea from 'primevue/textarea';
+import FileUpload from 'primevue/fileupload';
+// import Toast from 'primvue/toast';
 
 // Import Pinia for state
 import { createPinia } from 'pinia';
@@ -33,10 +38,15 @@ mapApp.use(router);
 // Use Prime Vue
 mapApp.use(PrimeVue, { ripple: true });
 mapApp.component('Button', Button);
+// mapApp.component('Toast', Toast);
+mapApp.component('FileUpload', FileUpload);
 mapApp.component('InputText', InputText);
+mapApp.component('Textarea', Textarea);
+mapApp.component('Checkbox', Checkbox);
 mapApp.component('Card', Card);
 mapApp.component('Avatar', Avatar);
 mapApp.component('Badge', Badge);
+mapApp.component('Dialog', Dialog);
 mapApp.directive('badge', BadgeDirective);
 
 // Use pinia for state

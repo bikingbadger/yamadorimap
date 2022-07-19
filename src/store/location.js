@@ -33,7 +33,7 @@ export const useLocationStore = defineStore('locations', {
         };
       });
     },
-    async addMarker(location) {
+    async addLocation(location) {
       const apiEndpoint = `${apiurl}/api/coordinate`;
       const payload = location;
       const result = await fetch(apiEndpoint, {
@@ -52,7 +52,7 @@ export const useLocationStore = defineStore('locations', {
       newLocation.latLng = latLng(parsedLatLng);
       this.locations.push(newLocation);
     },
-    async deleteMarker(location) {
+    async deleteLocation(location) {
       const payload = { ...location };
       payload.latLng = `${location.latLng.lat},${location.latLng.lng}`;
       const apiEndpoint = `${apiurl}/api/coordinate`;

@@ -1,35 +1,3 @@
-<template>
-  <div>
-    <l-map
-      style="height: 80vh; width: 100%"
-      :min-zoom="minZoom"
-      v-model:zoom="zoom"
-      :max-zoom="maxZoom"
-      :center="defaultLocation"
-      @click="addMarker"
-    >
-      <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      ></l-tile-layer>
-      <l-control-layers />
-
-      <l-marker
-        v-for="location in locations"
-        :key="location._id"
-        :lat-lng="location.latLng"
-        @click="deleteMarker(location)"
-      >
-        <l-tooltip>{{ location.tree }}</l-tooltip>
-        <l-icon
-          v-if="location.image"
-          :icon-url="location.image"
-          :icon-size="iconSize"
-        />
-      </l-marker>
-    </l-map>
-  </div>
-</template>
-
 <script setup>
 import { ref, reactive, computed } from 'vue';
 
@@ -41,6 +9,10 @@ import { storeToRefs } from 'pinia';
 import { useLocationStore } from '../store/location';
 import uuidv4 from '../utils/uuid';
 
+// Import Modal for Location
+import LocationDetails from '@/components/LocationDetails.vue';
+
+// Import Leaflet
 import { latLng } from 'leaflet/dist/leaflet-src.esm';
 import {
   LMap,
@@ -78,9 +50,32 @@ locationStore.getLocations();
 // });
 
 const { user } = useAuth0();
+const curLocation = reactive({
+  _id: '',
+  userID: '',
+  latLng: '',
+  tree: '',
+  image: '',
+  notes: '',
+  public: false,
+});
 
-function addMarker(event) {
-  if (!event.latlng) return;
+// Modal
+let showModal = ref(false);
+
+const openModal = (selectedLocation) => {
+  console.log(selectedLocation, selectedLocation.latLng);
+  if (!selectedLocation.latLng) return;
+  curLocation.latLng = `${selectedLocation.latLng.lat},${selectedLocation.latLng.lng}`;
+  curLocation.tree = selectedLocation.tree;
+  curLocation.image = selectedLocation.image;
+  curLocation.notes = selectedLocation.notes;
+  curLocation.public = selectedLocation.public;
+  showModal.value = true;
+};
+
+function addLocation(event) {
+  showModal.value = false;
 
   const location = {
     _id: uuidv4(),
@@ -92,12 +87,51 @@ function addMarker(event) {
     public: event.public || false,
   };
 
-  locationStore.addMarker(location);
+  locationStore.addLocation(location);
 }
 
-function deleteMarker(location) {
-  locationStore.deleteMarker(location);
+function deleteLocation(location) {
+  showModal.value = false;
+  locationStore.deleteLocation(location);
 }
 </script>
+
+<template>
+  <div>
+    <l-map
+      v-model:zoom="zoom"
+      style="height: 80vh; width: 100%"
+      :min-zoom="minZoom"
+      :max-zoom="maxZoom"
+      :center="defaultLocation"
+      @click="openModal()"
+    >
+      <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <l-control-layers />
+
+      <l-marker
+        v-for="location in locations"
+        :key="location._id"
+        :lat-lng="location.latLng"
+        @click="openModal(location)"
+      >
+        <l-tooltip>{{ location.tree }}</l-tooltip>
+        <l-icon
+          v-if="location.image"
+          :icon-url="location.image"
+          :icon-size="iconSize"
+        />
+      </l-marker>
+    </l-map>
+  </div>
+
+  <Dialog v-model:visible="showModal" header="Location">
+    <location-details
+      :CurrentLocation="curLocation"
+      @add-location="addLocation"
+      @delete-location="deleteLocation"
+    />
+  </Dialog>
+</template>
 
 <style></style>
