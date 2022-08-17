@@ -6,21 +6,34 @@ const props = defineProps({ CurrentLocation: { Object } });
 
 //const currentLocation = props.CurrentLocation;
 
-const addLocation = (location) => {
-  console.log('addLocation', location);
+const addLocation = () => {
+  const location = {
+    tree: tree.value,
+    latlng: latlng.value,
+    image: image.value,
+    notes: notes.value,
+    isPublic: isPublic.value,
+  };
   emit('addLocation', location);
 };
 
-const deleteLocation = (location) => {
-  console.log('deleteLocation', location);
+const deleteLocation = () => {
+  const location = {
+    _id: _id.value,
+    tree: tree.value,
+    latlng: latlng.value,
+    image: image.value,
+    notes: notes.value,
+    isPublic: isPublic.value,
+  };
   emit('deleteLocation', location);
 };
 // import { useToast } from 'primevue/usetoast';
 
-// latLng: `${event.latlng.lat},${event.latlng.lng}`,
 //     tree: event.tree || 'Test Tree',
-console.log(props.CurrentLocation);
+const _id = ref(props.CurrentLocation._id || '');
 const tree = ref(props.CurrentLocation.tree || '');
+const latlng = ref(props.CurrentLocation.latlng || '');
 //     image: event.image || '',
 const image = ref('');
 //     notes: event.notes || '',

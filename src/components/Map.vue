@@ -42,18 +42,15 @@ const iconSize = computed(() => {
 
 // Location related setup
 const { locations } = storeToRefs(useLocationStore());
+
 const locationStore = useLocationStore();
 locationStore.getLocations();
-
-// const user = reactive({
-//   defaultLocation: latLng(32.0461, 34.8516),
-// });
 
 const { user } = useAuth0();
 const curLocation = reactive({
   _id: '',
   userID: '',
-  latLng: '',
+  latlng: '',
   tree: '',
   image: '',
   notes: '',
@@ -64,9 +61,8 @@ const curLocation = reactive({
 let showModal = ref(false);
 
 const openModal = (selectedLocation) => {
-  console.log(selectedLocation, selectedLocation.latLng);
-  if (!selectedLocation.latLng) return;
-  curLocation.latLng = `${selectedLocation.latLng.lat},${selectedLocation.latLng.lng}`;
+  if (!selectedLocation.latlng) return;
+  curLocation.latlng = `${selectedLocation.latlng.lat},${selectedLocation.latlng.lng}`;
   curLocation.tree = selectedLocation.tree;
   curLocation.image = selectedLocation.image;
   curLocation.notes = selectedLocation.notes;
@@ -80,7 +76,7 @@ function addLocation(event) {
   const location = {
     _id: uuidv4(),
     userID: user._rawValue.sub,
-    latLng: `${event.latlng.lat},${event.latlng.lng}`,
+    latlng: event.latlng,
     tree: event.tree || 'Test Tree',
     image: event.image || '',
     notes: event.notes || '',
@@ -104,7 +100,7 @@ function deleteLocation(location) {
       :min-zoom="minZoom"
       :max-zoom="maxZoom"
       :center="defaultLocation"
-      @click="openModal()"
+      @click="openModal"
     >
       <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <l-control-layers />
@@ -112,7 +108,7 @@ function deleteLocation(location) {
       <l-marker
         v-for="location in locations"
         :key="location._id"
-        :lat-lng="location.latLng"
+        :lat-lng="location.latlng"
         @click="openModal(location)"
       >
         <l-tooltip>{{ location.tree }}</l-tooltip>
