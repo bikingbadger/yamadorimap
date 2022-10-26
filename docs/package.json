@@ -1,0 +1,19 @@
+{
+  "name": "yamadorimap",
+  "version": "0.0.1",
+  "description": "Mapping tree locations",
+  "main": "index.js",
+  "authors": {
+    "name": "Hilton Meyer",
+    "email": "contact@hiltonmeyer.com"
+  },
+  "repository": "bikingbadger/yamadorimap",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}
