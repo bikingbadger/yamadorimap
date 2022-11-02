@@ -4,7 +4,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: 'Vuepress Docs Boilerplate',
+  title: 'Yamadori App',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -41,10 +41,6 @@ module.exports = {
         text: 'Config',
         link: '/config/'
       },
-      {
-        text: 'VuePress',
-        link: 'https://v1.vuepress.vuejs.org'
-      }
     ],
     sidebar: {
       '/guide/': [
@@ -53,7 +49,7 @@ module.exports = {
           collapsable: false,
           children: [
             '',
-            'using-vue',
+            'register-user',
           ]
         }
       ],
