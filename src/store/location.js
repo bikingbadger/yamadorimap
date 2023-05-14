@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { latLng } from 'leaflet';
 import { authHeader } from '../utils/auth-header.js';
 
-const apiurl = `${process.env.VUE_APP_API_URL}`;
+const apiurl = `${process.env.VUE_APP_API_URL}/${process.env.VUE_APP_API_VERSION}`;
 
 export const useLocationStore = defineStore('locations', {
   state: () => ({
@@ -11,14 +11,20 @@ export const useLocationStore = defineStore('locations', {
   }),
   actions: {
     async getLocations() {
-      const apiEndpoint = `${apiurl}/api/coordinates`;
+      const apiEndpoint = `${apiurl}/coordinates`;
       const result = await fetch(apiEndpoint, {
         method: 'GET',
         headers: await authHeader(),
       });
+      
 
       const data = await result.json();
-      const userLocations = [...data.data];
+
+      console.log(data);
+
+      const userLocations = [...data.coordinates];
+
+      console.log(userLocations);
 
       this.locations = userLocations
         .map((location) => {
@@ -45,7 +51,7 @@ export const useLocationStore = defineStore('locations', {
         });
     },
     async addLocation(location) {
-      const apiEndpoint = `${apiurl}/api/coordinate`;
+      const apiEndpoint = `${apiurl}/coordinate`;
       const payload = location;
       const result = await fetch(apiEndpoint, {
         method: 'POST',
@@ -65,7 +71,7 @@ export const useLocationStore = defineStore('locations', {
     async deleteLocation(location) {
       const payload = { ...location };
       // payload.latlng = `${location.latlng.lat},${location.latlng.lng}`;
-      const apiEndpoint = `${apiurl}/api/coordinate`;
+      const apiEndpoint = `${apiurl}/coordinate`;
       const result = await fetch(apiEndpoint, {
         method: 'DELETE',
         headers: await authHeader(),
